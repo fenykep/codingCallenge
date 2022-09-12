@@ -409,14 +409,7 @@ async function printData(data){
 		var ingList = findKey(recipes, "name", gfd.name, "ingredients");
 		console.log(">ereceptbű kell " + gfd.amount);
 		for(const ing of ingList){
-			console.log("e Ingből kell " + ing.amount);
-			console.log("szóval összesen " + uSrp(ing.amount)*gfd.amount);
-			//console.log("ami kerül " + ing.price);
 			var bulksize = ing.amount.split(' ')[1]=='pc' ? 1:1000;
-			console.log("nagyker ad " + uSrp(findKey(data.wholesalePrices, "name", ing.name, "amount"))*bulksize + ing.amount.split(' ')[1]);
-			console.log("hánypaletta kell: " + Math.ceil(uSrp(ing.amount)*gfd.amount / uSrp(findKey(data.wholesalePrices, "name", ing.name, "amount"))/bulksize));
-			console.log("nagykerÁr/bulk: " + findKey(data.wholesalePrices, "name", ing.name, "price"));
-			console.log("Ehhez a termékhez, ennek az adott ingNek az ára " + findKey(data.wholesalePrices, "name", ing.name, "price") * Math.ceil(uSrp(ing.amount)*gfd.amount / uSrp(findKey(data.wholesalePrices, "name", ing.name, "amount"))/bulksize) + "Ft");
 			losses += findKey(data.wholesalePrices, "name", ing.name, "price") * Math.ceil(uSrp(ing.amount)*gfd.amount / uSrp(findKey(data.wholesalePrices, "name", ing.name, "amount"))/bulksize);
 		}
 	}
@@ -425,6 +418,8 @@ async function printData(data){
 
 	// solution for task 6
 	// 
+	//		console.log(inPol7(data, 2, 0.1));
+
 	var orderList = [];
 	for(const reci of data.salesOfLastWeek){
 	
@@ -435,13 +430,10 @@ async function printData(data){
 			var bulksize = ing.amount.split(' ')[1]=='pc' ? 1:1000;
 			reqAmount = uSrp(ing.amount) / bulksize * 2.1 * weeklySold;
 			// reqAmount = Math.round(reqAmount*10000)/10000;
-			// console.log("ingName: " + ing.name + " ing amount: " + uSrp(ing.amount) + " reqAmount: " + reqAmount);
-			// console.log("weeklySold: " + weeklySold);
-			// console.log("bulksize: " + bulksize);
 			var bulkOrderIndex = objInList(orderList, "name", ing.name);
-			// alma[0].amount = Number(alma[0].amount.split(' ')[0]) + reqAmount + ' ' + alma[0].amount.split(' ')[1]
-			//if the ingredient is already in the list of ings to bulkorder, then increase orderamount,
-			//else ad to the list
+			// if the ingredient is already in the list of ings to bulkorder,
+			// then increase orderamount,
+			// else ad to the list
 			if (bulkOrderIndex!=false) {
 				orderList[bulkOrderIndex-1] = {
 					"name": ing.name,
@@ -479,6 +471,10 @@ async function printData(data){
 
 	console.log(JSON.stringify(orderList, 1, 1));
 
+}
+
+function inPol7(data, weeks, overead){
+	
 }
 
 function objInList(list, key, keyVal){

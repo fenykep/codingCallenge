@@ -43,31 +43,30 @@ const godFatherDesire =[
 async function printData(data){
 
 	// solution for task 1
-	// console.log("Last week's sales: " + getWeeklySales(data.salesOfLastWeek, data.recipes) + " Ft");
+	console.log("Last week's sales: " + getWeeklySales(data.salesOfLastWeek, data.recipes) + " Ft");
 	//---------------------------------------------------------------
 
 	// solution for task 2
-	// console.log(altMenus(data.recipes));
+	console.log("Dietary inclusive menus:");
+	console.log(altMenus(data.recipes));
 	//---------------------------------------------------------------
 	
-	// var ingPriceList = ingPriceLister(data.wholesalePrices);
-	// var profPerItem = recipeProfitLister(data.recipes, ingPriceList);
-
 	// solution for task 3
-	// console.log(getWeeklyProfit(data.salesOfLastWeek, profPerItem));
-	console.log(getWeeklyProfit(data.salesOfLastWeek, data.wholesalePrices, data.recipes));
+	console.log("Last week's profit was: " + getWeeklyProfit(data.salesOfLastWeek, data.wholesalePrices, data.recipes) + "Ft");
 	//---------------------------------------------------------------
 
 	// solution for task 4
-	// console.log(JSON.stringify(useAllInvUp(data.recipes, data.inventory), null, 2));
+	console.log("If we were to use our inventory up for one recipe, this is how many items we would be able to make:");
+	console.log(JSON.stringify(useAllInvUp(data.recipes, data.inventory), null, 2));
 	//---------------------------------------------------------------	
 
 	// solution for task 5	
-	// console.log('This  "order" will set us back ' + costOfCustomOrder(godFatherDesire, data.recipes, data.wholesalePrices) + " forints. Sad :( ");
+	console.log('This  "order" will set us back ' + costOfCustomOrder(godFatherDesire, data.recipes, data.wholesalePrices) + " forints. Sad :( ");
 	//---------------------------------------------------------------	
 
 	// solution for task 6
-	// console.log(JSON.stringify(prep4future(data.salesOfLastWeek, data.recipes, data.inventory, data.wholesalePrices, 2, 0.1), null, 2));
+	console.log("To stock up for two more weeks, you have to send this invoice to the supplyer:");
+	console.log(JSON.stringify(prep4future(data.salesOfLastWeek, data.recipes, data.inventory, data.wholesalePrices, 2, 0.1), null, 2));
 	//---------------------------------------------------------------	
 }
 
@@ -123,14 +122,13 @@ function prep4future(salesOfLastWeek, recipes, inventory, wholesalePrices, weeks
 
 	//just trying out reordering the bulkOrderList according to the
 	//wholesale list
-	var newOrderList = [];
-	for(const ing of wholesalePrices){
-		var pushy = findKey(orderList, "name", ing.name);
-		console.log(pushy);
-		if(pushy){
-			newOrderList.push(pushy);
-		}
-	}
+	// var newOrderList = [];
+	// for(const ing of wholesalePrices){
+	// 	var pushy = findKey(orderList, "name", ing.name);
+	// 	if(pushy){
+	// 		newOrderList.push(pushy);
+	// 	}
+	// }
 
 	return orderList;
 }
@@ -180,7 +178,6 @@ function getWeeklySales(salesOfLastWeek, recipes){
 	var weeklySum = 0;
 	salesOfLastWeek.forEach(item => {
 		var uPrice = uSrp(findKey(recipes,"name",item.name,"price"));
-		// console.log(item.name + " " + uPrice + " Ft * " + item.amount+ " db  = " + uPrice*item.amount + " Ft");
 		weeklySum += uPrice*item.amount;
 	});
 	return weeklySum;
@@ -190,12 +187,6 @@ function getWeeklySales(salesOfLastWeek, recipes){
 //selling each item
 // function getWeeklyProfit(salesOfLastWeek, profPerItem){
 function getWeeklyProfit(salesOfLastWeek, wholesalePrices, recipes){
-	// var ingPriceList = ingPriceLister(wholesalePrices);
-	// var profPerItem = recipeProfitLister(recipes, ingPriceLister(wholesalePrices));
-	// console.log(ingPriceList);
-	// console.log(profPerItem);
-	// console.log(wholesalePrices);
-	// var ingPriceList = ingPriceLister(wholesalePrices);
 	var profPerItem = recipeProfitLister(recipes, ingPriceLister(wholesalePrices));
 
 	var weeklyProfit = 0;
@@ -246,7 +237,6 @@ function altMenus(recipes){
 			"name":i.name,
 			"price":i.price
 		}
-		console.log(goodRec);
 		if(i.lactoseFree&&i.glutenFree){
 			altMenu.lactoseAndGlutenFree.push(goodRec);
 		}

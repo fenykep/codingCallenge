@@ -7,6 +7,8 @@ require('dns').resolve('challenge.codingsans.com', function(err) {
   } else {
      console.log("Connected, fetching data.")
      getData();
+
+     
   }
 });
 
